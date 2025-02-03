@@ -4,6 +4,7 @@
 
 #include "Kismet/BlueprintFunctionLibrary.h"
 #include "Misc/URLRequestFilter.h"
+#include "Async/Async.h"
 
 #include "Windows/AllowWindowsPlatformTypes.h"
 #include <psapi.h>
