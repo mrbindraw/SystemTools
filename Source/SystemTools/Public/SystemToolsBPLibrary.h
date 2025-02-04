@@ -24,7 +24,7 @@ class USystemToolsBPLibrary : public UBlueprintFunctionLibrary
 	GENERATED_UCLASS_BODY()
 
 private:
-	static HWND BrowserWindowHandle;
+	static void* BrowserWindowHandle;
 	static TAtomic <uint32> ProcessId;
 	static TAtomic <uint32> ProcessIdCached;
 	static TAtomic <bool> IsBrowserChildProcess;

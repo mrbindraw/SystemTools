@@ -3,7 +3,7 @@
 #include "SystemToolsBPLibrary.h"
 #include "SystemTools.h"
 
-HWND USystemToolsBPLibrary::BrowserWindowHandle = nullptr;
+void* USystemToolsBPLibrary::BrowserWindowHandle = nullptr;
 TAtomic <uint32> USystemToolsBPLibrary::ProcessId = 0;
 TAtomic <uint32> USystemToolsBPLibrary::ProcessIdCached = 0;
 TAtomic <bool> USystemToolsBPLibrary::IsBrowserChildProcess = false;
@@ -293,8 +293,8 @@ void USystemToolsBPLibrary::LaunchURLEx(const FString& URL)
 					}
 
 					// Bring the browser window on top
-					IsSetWindowPos = ::SetWindowPos(BrowserWindowHandle, HWND_TOPMOST, 0, 0, 0, 0, SWP_NOSIZE | SWP_NOMOVE); // HWND_TOP for debug, HWND_TOPMOST for release
-					IsSetForegroundWindow = ::SetForegroundWindow(BrowserWindowHandle);
+					IsSetWindowPos = ::SetWindowPos((HWND)BrowserWindowHandle, HWND_TOPMOST, 0, 0, 0, 0, SWP_NOSIZE | SWP_NOMOVE); // HWND_TOP for debug, HWND_TOPMOST for release
+					IsSetForegroundWindow = ::SetForegroundWindow((HWND)BrowserWindowHandle);
 					UE_LOG(LogSystemTools, Log, TEXT("-> Move window on top, process: [%d], IsSetWindowPos: %s, IsSetForegroundWindow: %s"),
 						ProcessId.Load(),
 						IsSetWindowPos ? TEXT("true") : TEXT("false"),
@@ -321,7 +321,7 @@ void USystemToolsBPLibrary::BeginDestroy()
 	//HWND WindowHandle = FPlatformMisc::GetTopLevelWindowHandle(ProcessId);
 	if (IsBrowserChildProcess && BrowserWindowHandle)
 	{
-		bool IsPostMsg = ::PostMessageW(BrowserWindowHandle, WM_CLOSE, 0, 0);
+		bool IsPostMsg = ::PostMessageW((HWND)BrowserWindowHandle, WM_CLOSE, 0, 0);
 		UE_LOG(LogSystemTools, Log, TEXT("-> Close window, process: [%d], IsPostMsg: %s"), ProcessId.Load(), IsPostMsg ? TEXT("true") : TEXT("false"));
 	}
 
