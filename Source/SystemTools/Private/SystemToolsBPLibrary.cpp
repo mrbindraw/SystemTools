@@ -18,12 +18,6 @@ USystemToolsBPLibrary::USystemToolsBPLibrary(const FObjectInitializer& ObjectIni
 
 void USystemToolsBPLibrary::LaunchURLEx(const FString& URL)
 {
-// === START COPY CODE from [UE 5.4.4] Engine\Source\Runtime\Engine\Private\KismetSystemLibrary.cpp
-		// The function UKismetSystemLibrary::LaunchURL(URL):
-		// Can't close child process browser after closed game and steam-client think the game is still launched;
-		// Can't move browser window on top of game window, when game launched in full screen mode;
-		// *** But this function LaunchURLEx can do this, tested on Windows 10, 11; browsers: Chrome, Opera, Firefox, Edge, Enjoy! :)
-
 	UE_LOG(LogSystemTools, Log, TEXT("----------------> LaunchURLEx: %s"), *URL);
 
 	if (URL.IsEmpty())
@@ -31,16 +25,25 @@ void USystemToolsBPLibrary::LaunchURLEx(const FString& URL)
 		return;
 	}
 
+#if PLATFORM_WINDOWS
+
+	/* 
+	* LaunchURLEx(String: URL) it fix for UKismetSystemLibrary::LaunchURL(String: URL), only for Windows.
+	* Because function from engine UKismetSystemLibrary::LaunchURL(String: URL): 
+	* It can't move the browser window on top when the game window is in fullscreen, launches the browser behind the game window. 
+	* It can't close the browser window after closing the game, (if the browser was opened from the game) 
+	* and the Steam client thinks the game is still running.
+	* Tested on Windows 10, 11 for browsers: Chrome, Opera, Firefox, Edge.
+	*/
+
+// === START COPY CODE from [UE 5.4.4] Engine\Source\Runtime\Engine\Private\KismetSystemLibrary.cpp
 	UE::Core::FURLRequestFilter Filter(TEXT("SystemLibrary.LaunchURLFilter"), GEngineIni);
-
 	const bool bAllowedByFilter = Filter.IsRequestAllowed(URL);
-
 	if (!bAllowedByFilter)
 	{
 		return;
 	}
 
-#if PLATFORM_WINDOWS
 	FString BrowserOpenCommand;
 
 	// First lookup the program Id for the default browser.
@@ -90,7 +93,7 @@ void USystemToolsBPLibrary::LaunchURLEx(const FString& URL)
 				// This is for robustness, and to fix a known error case when using Internet Explorer 8. 
 				ExeArgs.Append(TEXT(" \"") + URL + TEXT("\""));
 			}
-// === END COPY CODE
+// === END COPY CODE from [UE 5.4.4] Engine\Source\Runtime\Engine\Private\KismetSystemLibrary.cpp
 
 			UE_LOG(LogSystemTools, Log, TEXT("-> ThreadId: [%d]"), ::GetCurrentThreadId());
 
@@ -302,6 +305,9 @@ void USystemToolsBPLibrary::LaunchURLEx(const FString& URL)
 			});
 		}
 	}
+#else
+	// This is temporary solution for other platforms exclude Windows
+	UKismetSystemLibrary::LaunchURL(URL);
 #endif
 
 }
