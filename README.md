@@ -27,6 +27,6 @@ Follow the steps:
 D:\EpicGames\UE_5.4\Engine\Build\BatchFiles\RunUAT.bat BuildPlugin -Plugin=D:\Plugins\SystemTools\SystemTools.uplugin -Package=D:\Plugins\UE_5.4\SystemTools -Rocket
 ```  
 4. If you see the message `BUILD SUCCESSFUL` in the terminal after the build is complete,  
-copy the `SystemTools` folder from `D:\Plugins\UE_5.4` to `D:\EpicGames\UE_5.4\Engine\Plugins`  
+copy the `SystemTools` folder from `D:\Plugins\UE_5.4` to `D:\EpicGames\UE_5.4\Engine\Plugins\Marketplace`  
 > [!IMPORTANT]
 > **The engine path and folder names may differ on your system.**
