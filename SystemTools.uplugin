@@ -18,7 +18,7 @@
 		{
 			"Name": "SystemTools",
 			"Type": "Runtime",
-			"LoadingPhase": "PreLoadingScreen"
+			"LoadingPhase": "Default"
 		}
 	]
 }
