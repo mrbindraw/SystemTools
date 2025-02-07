@@ -19,7 +19,7 @@
 DECLARE_LOG_CATEGORY_EXTERN(LogSystemTools, Log, All);
 
 UCLASS()
-class USystemToolsBPLibrary : public UBlueprintFunctionLibrary
+class SYSTEMTOOLS_API USystemToolsBPLibrary : public UBlueprintFunctionLibrary
 {
 	GENERATED_UCLASS_BODY()
 
