@@ -6,20 +6,22 @@
 #include "Kismet/KismetSystemLibrary.h"
 #include "Misc/URLRequestFilter.h"
 #include "Async/Async.h"
+#include "GenericPlatform/GenericPlatformProcess.h"
 
+#if PLATFORM_WINDOWS
 #include "Windows/AllowWindowsPlatformTypes.h"
 #include <psapi.h>
 #include <tlhelp32.h>
-#include "GenericPlatform/GenericPlatformProcess.h"
 #include "Windows/WindowsSystemIncludes.h"
 #include "Windows/HideWindowsPlatformTypes.h"
+#endif
 
 #include "SystemToolsBPLibrary.generated.h"
 
 DECLARE_LOG_CATEGORY_EXTERN(LogSystemTools, Log, All);
 
 UCLASS()
-class USystemToolsBPLibrary : public UBlueprintFunctionLibrary
+class SYSTEMTOOLS_API USystemToolsBPLibrary : public UBlueprintFunctionLibrary
 {
 	GENERATED_UCLASS_BODY()
 
