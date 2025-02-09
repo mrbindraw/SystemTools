@@ -6,13 +6,15 @@
 #include "Kismet/KismetSystemLibrary.h"
 #include "Misc/URLRequestFilter.h"
 #include "Async/Async.h"
+#include "GenericPlatform/GenericPlatformProcess.h"
 
+#if PLATFORM_WINDOWS
 #include "Windows/AllowWindowsPlatformTypes.h"
 #include <psapi.h>
 #include <tlhelp32.h>
-#include "GenericPlatform/GenericPlatformProcess.h"
 #include "Windows/WindowsSystemIncludes.h"
 #include "Windows/HideWindowsPlatformTypes.h"
+#endif
 
 #include "SystemToolsBPLibrary.generated.h"
 
