@@ -1,7 +1,7 @@
 {
 	"FileVersion": 3,
-	"Version": 2,
-	"VersionName": "2.0.0",
+	"Version": 3,
+	"VersionName": "2.1.0",
 	"FriendlyName": "SystemTools",
 	"Description": "This plugin contains system functions with specific modifications or just wrappers for blueprints. More functions are planned to be added in the future.",
 	"Category": "Other",
